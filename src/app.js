@@ -9,18 +9,30 @@ const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schemas");
 const depthLimit = require("graphql-depth-limit");
 const createNoAliasValidation = require("graphql-no-alias").createValidation;
+const NoIntrospection = require("graphql-disable-introspection");
 
 const makeApp = ({ port = config.defaultPort }) => {
+    // security setup
     const aliasPermissions = {
         Query: {
             "*": 2,
         },
         Mutation: {
             "*": 2
+        },
+        Subscription: {
+            "*": 2
         }
     };
     const noAliasValidation = createNoAliasValidation({ permissions: aliasPermissions }).validation;
+    const queryValidationRules = [noAliasValidation, depthLimit(3)];
+    let graphiql = true;
+    if (process.env.NODE_ENV == "production") {
+        graphiql = false;
+        queryValidationRules.push(NoIntrospection);
+    }
 
+    // app configurations
     const app = express();
     app.set("port", port);
     app.use(morgan("dev"));
@@ -49,8 +61,8 @@ const makeApp = ({ port = config.defaultPort }) => {
     });
     app.use("/graphql", graphqlHTTP({
         schema,
-        graphiql: true,
-        validationRules: [noAliasValidation, depthLimit(3)]
+        graphiql,
+        validationRules: queryValidationRules
     }));
 
     app.use("*", (req, res) => {
