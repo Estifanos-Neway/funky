@@ -4,7 +4,7 @@
   "description": "An API (GraphQL) hosting articles about artists.",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index",
+    "start": "NODE_ENV=production node src/index",
     "dev": "nodemon  src/index"
   },
   "repository": {
@@ -26,11 +26,16 @@
     "express-graphql": "^0.12.0",
     "express-rate-limit": "^6.7.0",
     "graphql": "^15.8.0",
+    "graphql-depth-limit": "^1.1.0",
+    "graphql-disable-introspection": "^1.2.0",
+    "graphql-no-alias": "^3.0.3",
     "helmet": "^6.0.1",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@types/node": "^18.11.10",
+    "eslint": "^8.28.0",
     "nodemon": "^2.0.20"
   }
 }
