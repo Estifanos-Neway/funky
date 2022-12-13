@@ -2,7 +2,7 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLNonNull
-} = require('graphql');
+} = require("graphql");
 
 module.exports = {
     Image: new GraphQLObjectType({
