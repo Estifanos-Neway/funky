@@ -1,6 +1,6 @@
 module.exports = [
     {
-        username: "Admin",
+        email: "admin@funky.com",
         passwordHash: "pwh"
     }
 ];
