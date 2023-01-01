@@ -43,7 +43,7 @@ const makeApp = ({ port = config.defaultPort }) => {
             optionsSuccessStatus: 200
         }
     ));
-    app.use(express.static("src/public"));
+    app.use(express.static("public"));
     // @ts-ignore
     const limiter = rateLimit({
         windowMs: 1 * 60 * 1000,
@@ -57,7 +57,7 @@ const makeApp = ({ port = config.defaultPort }) => {
     app.use(express.json());
 
     app.get("/", (req, res) => {
-        res.status(404).json(utils.createSingleResponse("Welcome!"));
+        res.status(200).json(utils.createSingleResponse("Welcome!"));
     });
     app.use("/graphql", graphqlHTTP({
         schema,
